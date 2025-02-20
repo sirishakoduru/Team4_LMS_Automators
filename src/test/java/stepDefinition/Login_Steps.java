@@ -38,6 +38,8 @@ public class Login_Steps {
 		System.out.println("username: " + reader.getProperty("username"));
 		login.enterUsername(reader.getProperty("username"));
 		login.enterPassword(reader.getProperty("password"));
+		login.select_role();
+		login.clickLoginBtn();
 	}
 
 	@Then("Admin should land on dashboard page")
