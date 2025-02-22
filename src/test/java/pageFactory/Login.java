@@ -19,6 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import driver.DriverFactory;
 import utilities.ConfigReader;
@@ -87,6 +88,11 @@ public class Login {
 	
 	public void enterPassword(String passWord) {
 		password.sendKeys(passWord);
+	}
+	
+	public void select_role() {
+		SelectRole.click();
+		AdminRole.click();
 	}
 	
 	public void clickLoginBtn() {
