@@ -28,17 +28,7 @@ public class Utils {
 		new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(element));
 
 	}
-	public String getCodefromExcel(String sheetname, int rownumber) throws InvalidFormatException, IOException {
-		List<Map<String, String>> testdata = reader.getData(excelPath, sheetname);
-		String code = testdata.get(rownumber).get("pythonCode");
-		return code;
-	}
-	
-	public String getOutputFromExcel(String sheetname, int rownumber) throws InvalidFormatException, IOException {
-		List<Map<String, String>> testdata = reader.getData(excelPath, sheetname);
-		String result = testdata.get(rownumber).get("output");
-		return result;
-	}
+
 	public void enterCode(String code, WebElement element) {
 
 		new Actions(driver).sendKeys(element, code).perform();

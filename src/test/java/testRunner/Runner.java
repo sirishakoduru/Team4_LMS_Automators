@@ -8,11 +8,11 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 
 
-@CucumberOptions(features={"src/test/resources/Features"},
-//tags = " ",
+@CucumberOptions(features={"src/test/resources/Features/01-02-Login.feature"},
+//tags = "@Login_01",
 
-publish=true,
-glue= {"stepDefinition","Hooks"},
+publish=false,
+glue= {"stepDefinition","hooks"},
 plugin={"pretty","html:target/CucumberReports/CucumberReport.html",
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
