@@ -8,10 +8,10 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 
 
-@CucumberOptions(features={"src/test/resources/Features/BatchPageValidation.feature"},
-//tags = " ",
+@CucumberOptions(features={"src/test/resources/Features/01-02-Login.feature"},
+//tags = "@Login_01",
 
-publish=true,
+publish=false,
 glue= {"stepDefinition","hooks"},
 plugin={"pretty","html:target/CucumberReports/CucumberReport.html",
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",

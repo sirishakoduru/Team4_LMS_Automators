@@ -47,7 +47,7 @@ public class ConfigReader {
          if (BaseURL != null)
             return BaseURL;
          else
-             throw new RuntimeException("Username not specified in the Config.properties file");
+             throw new RuntimeException("URL not specified in the Config.properties file");
     }
 
 	// UserName
@@ -68,4 +68,14 @@ public class ConfigReader {
     	 else
     		 throw new RuntimeException("Password not specified in the Config.properties file");
     }
+
+    public static String invalidURL()
+    {    	
+         String invalidURL=prop.getProperty("invalidURL");
+         if (invalidURL != null)
+            return invalidURL;
+         else
+             throw new RuntimeException("URL not specified in the Config.properties file");
+    }
+	
 }
