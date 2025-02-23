@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import utilities.ConfigReader;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 	
@@ -19,8 +19,11 @@ public static WebDriver driver;
 		System.out.println("browser value is: " +browser);
 		
 		if(browser.equals("chrome")) {
-			//WebDriverManager.chromedriver().setup();
+			System.out.println("After web driver ");
+			WebDriverManager.chromedriver().setup();
+			System.out.println("After web driver ");
 			tldriver.set(new ChromeDriver());
+			System.out.println("After set(new ChromeDriver())");
 		}
 		else if (browser.equals("firefox")) {
 			//WebDriverManager.firefoxdriver().setup();

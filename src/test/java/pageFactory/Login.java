@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.jspecify.annotations.Nullable;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import driver.DriverFactory;
 import utilities.ConfigReader;
@@ -22,6 +25,9 @@ public class Login {
 	@FindBy(id="username") WebElement username;
 	@FindBy(id="password") WebElement password;
 	@FindBy(id="login")	WebElement loginbtn;
+	@FindBy(id="mat-select-value-1") WebElement rolecombo;
+	@FindBy(xpath="//span[contains(@class,'mat-option-text') and contains(text(),'Admin')]") WebElement roleAdmin;
+	@FindBy(xpath="//div[@role='listbox']") List<WebElement> options;
 	
 	public Login() {
 		PageFactory.initElements(driver, this);		
@@ -54,8 +60,32 @@ public class Login {
 		password.sendKeys(passWord);
 	}
 	
+	public void enterRole(String role) throws InterruptedException {
+		
+		System.out.println("Inside enterRole");
+		rolecombo.click();
+		
+		Thread.sleep(1000);
+		roleAdmin.click();
+		//options.get(0).click();
+		Thread.sleep(1000);
+		
+/*		for (WebElement option : options) {
+			
+			System.out.println("Inside for loop: "+option.getText());
+            if (option.getText().equalsIgnoreCase(role)) {  // Replace with the desired value
+            	System.out.println("Inside if"+role);
+                option.click();
+                break;            }
+		}*/
+		
+	}
+	
+	
 	public void clickLoginBtn() {
-		loginbtn.clear();
+		
+		Actions actions = new Actions(driver);
+		actions.moveToElement(loginbtn).click().perform();
 	}
 
 }

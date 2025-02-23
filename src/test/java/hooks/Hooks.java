@@ -19,23 +19,26 @@ import utilities.LoggerLoad;
 public class Hooks {
 	
 	public static WebDriver driver;
-	// DriverFactory df=new DriverFactory();
+	private static boolean isBackgroundExecuted = false;
 
 	@Before
 	public void setup() throws Throwable {
-		DriverFactory.initializeBrowser(ConfigReader.getProperty("browser"));
-//		String browser = ConfigReader.getBrowserType();
-		//DriverFactory.initializeBrowser(browser);
-
-		driver = DriverFactory.getDriver();
-
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		if (!isBackgroundExecuted ) {
+			
+				DriverFactory.initializeBrowser(ConfigReader.getProperty("browser"));
+		
+				driver = DriverFactory.getDriver();
+		
+				driver.manage().deleteAllCookies();
+				driver.manage().window().maximize();
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+				isBackgroundExecuted = true;	
+		}
 
 	}
 
-	@After
+	@After("@LastScenario")
 	public void tearDown(Scenario scenario) throws Throwable {
 
 		String scenarioName = scenario.getName().replaceAll(" ", "_");

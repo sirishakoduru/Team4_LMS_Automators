@@ -33,15 +33,19 @@ public class Login_Steps {
 	}
 
 	@When("Admin enter valid credentials  and clicks login button")
-	public void admin_enter_valid_credentials_and_clicks_login_button() throws IOException {
+	public void admin_enter_valid_credentials_and_clicks_login_button() throws IOException, InterruptedException {
 	    
 		System.out.println("username: " + reader.getProperty("username"));
 		login.enterUsername(reader.getProperty("username"));
 		login.enterPassword(reader.getProperty("password"));
+		login.enterRole("Admin");
+		login.clickLoginBtn();
 	}
 
 	@Then("Admin should land on dashboard page")
-	public void admin_should_land_on_dashboard_page() {
+	public void admin_should_land_on_dashboard_page() throws InterruptedException {
+		
+		Thread.sleep(2000);
 	    
 	}
 
