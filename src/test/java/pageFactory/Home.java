@@ -35,14 +35,14 @@ public class Home {
 			System.out.println("Inside Home homepageverify Try");
 				subMenu.click();
 				subMenuClose.click();
-				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 				((JavascriptExecutor) driver).executeScript("arguments[0].click();", wait.until(ExpectedConditions.elementToBeClickable(homeLink)));
 			    homeLink.click();
 		    
 		} catch (Exception e) {
 			
 			System.out.println("Inside Home homepageverify Exception");
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", wait.until(ExpectedConditions.elementToBeClickable(homeLink)));
 		    homeLink.click();
 		}
@@ -57,8 +57,10 @@ public class Home {
 		try {
 			subMenu.click();
 			subMenuClose.click();
+			System.out.println("Inside Home try programlink click");
 	    
 		} catch (Exception e) {
+			System.out.println("Inside Home Excepion programlink click");
 		    programLink.click();
 		}
 		System.out.println("Inside Home programlink click");
