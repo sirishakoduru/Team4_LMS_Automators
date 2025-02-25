@@ -44,7 +44,7 @@ public class AddBatch_Steps {
 
 	@Then("Admin should get error message below the text box of respective field")
 	public void admin_should_get_error_message_below_the_text_box_of_respective_field() {
-	    ab.ReadError_ClassNo();
+		ab.Invalid_BatchNumber_Error();
 	}
 
 	@When("Admin enters alphabets in batch name prefix box")

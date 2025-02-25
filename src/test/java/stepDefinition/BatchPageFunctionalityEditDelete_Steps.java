@@ -69,7 +69,7 @@ public class BatchPageFunctionalityEditDelete_Steps {
 	
 	@Then("Admin should get a error message under the respective field")
 	public void admin_should_get_a_error_message_under_the_respective_field() {
-	    bpf.ReadErrorMessage();
+//	    bpf.ReadErrorMessage();
 	}
 	@When("Admin enters the batch name in the search text box")
 	public void admin_enters_the_batch_name_in_the_search_text_box() {

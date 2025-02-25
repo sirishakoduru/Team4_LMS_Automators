@@ -1,7 +1,9 @@
 package pageFactory;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -22,6 +24,9 @@ public class Logout {
 	
 	
 	public void logout() {
+		Actions action= new Actions(driver);
+		WebElement bodyElement = driver.findElement(By.xpath("//body[contains(@class, 'mat-typography')]"));
+        action.moveByOffset(0, 0).click().perform();
 		logoutbt.isDisplayed();
 		logoutbt.click();
 	}

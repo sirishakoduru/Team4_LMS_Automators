@@ -50,10 +50,16 @@ public class Class {
 	}
 	
 	public void home() {
+		Actions action= new Actions(driver);
+		WebElement bodyElement = driver.findElement(By.xpath("//body[contains(@class, 'mat-typography')]"));
+        action.moveByOffset(0, 0).click().perform();
 		HomeButton.click();
 	}
 	
 	public void classbtn() {
+		Actions action= new Actions(driver);
+		WebElement bodyElement = driver.findElement(By.xpath("//body[contains(@class, 'mat-typography')]"));
+        action.moveByOffset(0, 0).click().perform();
 		Classbtn.click();
 }
 	public void lmstitle() {
@@ -71,7 +77,7 @@ public class Class {
 public void dashboardhr() {
 		
 		String actual = dashboardhr.getText();
-		Assert.assertEquals(actual," Dashboard");
+		Assert.assertEquals(actual,"Dashboard");
 }
 	public String searchbar() {
 		
