@@ -1,5 +1,6 @@
 package stepDefinition;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import org.junit.Assert;
@@ -53,11 +54,11 @@ public class ClassAddNewPopup_Steps {
 	    addClass.clickAddNewClass();
 	}
 
-	@When("Admin enters mandatory fields in the form and clicks on save button")
-	public void admin_enters_mandatory_fields_in_the_form_and_clicks_on_save_button() throws InterruptedException {
+	@When("Admin enters mandatory fields from {string} and {string} in the form and clicks on save button")
+	public void admin_enters_mandatory_fields_from_and_in_the_form_and_clicks_on_save_button(String sheetname, String Testcase) throws InterruptedException, IOException {
 	    addClass.clickBatchNameDropdown();
 	    addClass.selectBatchNameDrpdownValue();
-	    addClass.EnterClassTopic();
+	    addClass.readDataFromSheet(sheetname, Testcase);
 	    addClass.clickStaffName();
 	    addClass.selectStaffName();
 	    addClass.selectStatus();
@@ -98,10 +99,10 @@ public class ClassAddNewPopup_Steps {
 	    Assert.assertTrue(addClass.checkDisabledWeekends());
 	}
 
-	@When("Admin skips to add value in mandatory field and enter only the optional field")
-	public void admin_skips_to_add_value_in_mandatory_field_and_enter_only_the_optional_field() {
+	@When("Admin skips to add value in mandatory field and enter only the optional field from {string} and {string}")
+	public void admin_skips_to_add_value_in_mandatory_field_and_enter_only_the_optional_field_from_and(String string, String string2) throws IOException {
 	    
-		addClass.createOptionsfeilds();
+		addClass.readDataFromSheetforOptional(string, string2);
 		addClass.clickSaveBtn();
 	}
 
@@ -155,16 +156,10 @@ public class ClassAddNewPopup_Steps {
 		addClass.isClassPopupClosed();
 	}
 
-	@When("Admin clicks save button")
-	public void admin_clicks_save_button() throws InterruptedException {
-		addClass.clickBatchNameDropdown();
-	    addClass.selectBatchNameDrpdownValue();
-	    addClass.EnterClassTopic();
-	    addClass.clickStaffName();
-	    addClass.selectStaffName();
-	    addClass.selectStatus();
-	    addClass.clickDatePicker();
-	    addClass.selectClassDate();
+	@When("Admin enters data from {string} and {string} and clicks save button")
+	public void admin_enters_data_from_and_and_clicks_save_button(String string, String string2) throws InterruptedException, IOException {
+	    
+		addClass.readDataFromExcelForAllFeilds(string, string2);
 	    addClass.clickSaveBtn();
 	    
 	}

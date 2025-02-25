@@ -2,6 +2,7 @@ package stepDefinition;
 
 import static org.testng.Assert.assertTrue;
 
+import driver.DriverFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,6 +10,7 @@ import pageFactory.BatchModuleNavigation;
 
 public class BatchModuleNavigation_Steps {
 	BatchModuleNavigation bmn=new BatchModuleNavigation();
+	DriverFactory driver = new DriverFactory();
 	
 	@Given("Admin is on the home page")
 	public void admin_is_on_the_home_page() {

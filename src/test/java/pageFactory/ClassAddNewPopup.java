@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import driver.DriverFactory;
 import utilities.ConfigReader;
+import utilities.ExcelReader;
 import utilities.Utils;
 
 public class ClassAddNewPopup {
@@ -107,6 +108,7 @@ public class ClassAddNewPopup {
 
 	public void selectClassDate() throws InterruptedException {
 		Actions action = new Actions(driver);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		// Get future date (e.g., 7 days from today)
         LocalDate futureDate = LocalDate.now().plusDays(2); // Start from tomorrow
         while (futureDate.getDayOfWeek() == DayOfWeek.SATURDAY || futureDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -248,6 +250,19 @@ public class ClassAddNewPopup {
 		classNotes.sendKeys("Testing");
 		classRecording.sendKeys("Link");
 	}
+	public void readDataFromSheetforOptional(String sheetName, String testCase) throws IOException {
+	    ExcelReader reader = new ExcelReader();
+        String ClassdescExcelValue = reader.getTestData(sheetName, testCase, "classDescription");
+        classDescription.sendKeys(ClassdescExcelValue);
+        String CommentsExcelValue = reader.getTestData(sheetName, testCase, "comments");
+        classComments.sendKeys(CommentsExcelValue);
+        String NotesExcelValue = reader.getTestData(sheetName, testCase, "notes");
+        classNotes.sendKeys(NotesExcelValue);
+        String RecordingsExcelValue = reader.getTestData(sheetName, testCase, "recording");
+        classRecording.sendKeys(RecordingsExcelValue);
+        
+    }
+	
 	public void CreateTextFeildsSpecialChar() {
 		classDescription.sendKeys("@#$%^%$");
 		classComments.sendKeys("@#$%^&");
@@ -330,4 +345,31 @@ public class ClassAddNewPopup {
             System.out.println("Test Failed: Popup is still visible.");
         }
 	}
+	public void readDataFromSheet(String sheetName, String testCase) throws IOException {
+	    ExcelReader reader = new ExcelReader();
+        String ClassTopicExcelValue = reader.getTestData(sheetName, testCase, "classTopic");
+        classTopic.sendKeys(ClassTopicExcelValue);
+        
+    }
+	public void readDataFromExcelForAllFeilds(String sheetName, String testCase) throws IOException, InterruptedException {
+	    ExcelReader reader = new ExcelReader();
+	    clickBatchNameDropdown();
+	    selectBatchNameDrpdownValue();
+	    String ClassTopicExcelValue = reader.getTestData(sheetName, testCase, "classTopic");
+        classTopic.sendKeys(ClassTopicExcelValue);
+        String ClassdescExcelValue = reader.getTestData(sheetName, testCase, "classDescription");
+        classDescription.sendKeys(ClassdescExcelValue);
+        clickDatePicker();
+        selectClassDate();
+        clickStaffName();
+        selectStaffName();
+        selectStatus();
+        String CommentsExcelValue = reader.getTestData(sheetName, testCase, "comments");
+        classComments.sendKeys(CommentsExcelValue);
+        String NotesExcelValue = reader.getTestData(sheetName, testCase, "notes");
+        classNotes.sendKeys(NotesExcelValue);
+        String RecordingsExcelValue = reader.getTestData(sheetName, testCase, "recording");
+        classRecording.sendKeys(RecordingsExcelValue);
+        
+    }
 }

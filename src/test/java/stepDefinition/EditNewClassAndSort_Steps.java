@@ -61,9 +61,9 @@ public class EditNewClassAndSort_Steps {
 		addClass.createOptionsfeilds();
 //		addClass.clickStaffName();
 //	    addClass.selectStaffName();
+	    addClass.selectStatus();
 	    addClass.clickDatePicker();
 	    addClass.selectClassDate();
-		editClass.selectStatus();
 	    addClass.clickSaveBtn();
 	    
 	}

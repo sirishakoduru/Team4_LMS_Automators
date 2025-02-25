@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 
 
-@CucumberOptions(features={"src/test/resources/Features/01-02-Login.feature", "src/test/resources/Features/01-01-Login.feature"},
+@CucumberOptions(features={"src/test/resources/Features"},
 //tags = "@Login_01",
 
 publish=true,

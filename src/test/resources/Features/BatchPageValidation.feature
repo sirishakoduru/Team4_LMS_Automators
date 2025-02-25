@@ -4,9 +4,9 @@ Feature: Batch page navigation
 
 Background: Admin successfully logged-in to LMS Portal
 Given Admin Gives the valid LMS portal URL
-When Admin enter valid credentials  and clicks login button
-Then Admin should land on dashboard page
-And Admin is on the home page
+And Admin is on login Page
+When Admin enter valid data in all field and clicks login button
+Then Admin should land on home page
 
 @Validate_Title
 Scenario: Validate "Title" in Batch Page

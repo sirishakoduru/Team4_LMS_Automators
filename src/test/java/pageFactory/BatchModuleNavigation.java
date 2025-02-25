@@ -17,6 +17,7 @@ public class BatchModuleNavigation {
 	WebDriver driver=DriverFactory.getDriver();
 	//driver.manage().window().maximize();
 	ConfigReader reader=new ConfigReader();
+	String baseURL = ConfigReader.baseUrl();
 	
 	@FindBy(xpath="//div//button[3][@class='mat-focus-indicator mat-menu-trigger mat-button mat-button-base']")
 	WebElement BatchButton;
