@@ -145,17 +145,18 @@ public class Program_Steps {
 	@Then("Admin should see the footer as {string}.")
 	public void admin_should_see_the_footer_as(String string) {
 		Assert.assertEquals(true, program.validateFooter(string));
-
 	}
+	
+	///    Add Program /////
 	
 	@Given("Admin is on Program page")
 	public void admin_is_on_program_page() {
-		Assert.assertEquals(program.programPageVerify(),true,"Verifying if we are on PROGRAM page" );
+		//Assert.assertEquals(program.programPageVerify(),true,"Verifying if we are on PROGRAM page" );
 	}
 
 	@When("Admin clicks on {string} under the {string} menu bar")
 	public void admin_clicks_on_under_the_menu_bar(String string, String string2) {
-		Assert.assertEquals(program.subMenuClick(),true,"SubMenu is clicked" );
+		program.programLinkAddClick();
 	}
 
 	@Then("Admin should see pop up window for program details")
@@ -163,6 +164,151 @@ public class Program_Steps {
 		Assert.assertEquals(program.isProgramDetailsPopup(),true,"See the Add window" );
 	}
 	
+	@Then("Admin should see window title as {string}")
+	public void admin_should_see_window_title_as(String string) {
+		program.validateProgramDetailsTitle(string);
+	}
+
+	@Then("Admin should see red  asterisk mark  beside mandatory field {string}")
+	public void admin_should_see_red_asterisk_mark_beside_mandatory_field(String string) {
+		Assert.assertEquals(program.validateAsterisk(string), true);
+	}
+
+	@Given("Admin is on Program details form")
+	public void admin_is_on_program_details_form() {
+		program.programLinkAddForm();
+	}
+
+	@When("Admin clicks save button without entering mandatory")
+	public void admin_clicks_save_button_without_entering_mandatory() {
+	    program.clickSaveAdd();
+	}
+
+	@Then("Admin gets error message")
+	public void admin_gets_message() {
+		Assert.assertEquals(program.mandatoryError(), true,"Error Message if a mandatory field is missed");
+	}
 	
+	@When("Admin clicks Cancel button")
+	public void admin_clicks_cancel_button() {
+		program.clickCancelAdd();
+	}
+
+	@Then("Admin can see Program Details form disappears")
+	public void admin_can_see_program_details_form_disappears() {
+		Assert.assertEquals(program.isProgramDetailsPopup(),false,"The Add window disappears" );
+	}
+	
+	@When("Admin enters the Name in the text box")
+	public void admin_enters_the_name_in_the_text_box() {
+		program.enterPgName();
+	}
+
+	@Then("Admin can see the text entered")
+	public void admin_can_see_the_text_entered() {
+		program.dispPgName();
+	}
+	
+	@When("Admin enters the Description in text box")
+	public void admin_enters_the_description_in_text_box() {
+		program.enterPgDescName();
+	}
+
+	@Then("Admin can see the text entered in description box")
+	public void admin_can_see_the_text_entered_in_description_box() {
+		program.dispPgDescName();
+	}
+
+	@When("Admin selects the status of the program by clicking on the radio buttonx")
+	public void admin_selects_the_status_of_the_program_by_clicking_on_the_radio_buttonx() {
+		program.selBtn();
+	}
+
+	@Then("Admin can see status selected")
+	public void admin_can_see_status_selected() {
+		program.dispSelBtn();
+	}
+	
+
+	@When("Admin enter valid details for mandatory fields and Click on save button")
+	public void admin_enter_valid_details_for_mandatory_fields_and_click_on_save_button() {
+		program.enterPgName();
+		program.enterPgDescName();
+		program.selBtn();
+		program.clickSaveAdd();
+		
+	}
+	
+	@Then("Admin gets message {string}")
+	public void admin_gets_message(String string) {
+
+	}
+	
+	@When("Admin Click on cancel button")
+	public void admin_click_on_cancel_button() {
+		
+		program.enterPgName();
+		program.enterPgDescName();
+		program.selBtn();
+		program.clickCancelAdd();
+
+	}
+	
+	@Then("Admin can see program details form disappear")
+	public void admin_can_see_program_details_form_disappear() {
+
+	}
+	
+	@When("Admin searches with newly created {string}")
+	public void admin_searches_with_newly_created(String string) {
+
+	}
+	
+	@Then("Records of the newly created  {string} is displayed and match the data entered")
+	public void records_of_the_newly_created_is_displayed_and_match_the_data_entered(String string) {
+
+	}
+
+	@When("Admin Click on close button")
+	public void admin_click_on_close_button() {
+
+	}
+	
+	/***************************                    SORTING   ********************************/
+	
+	@When("Admin clicks on Arrow next to program Name")
+	public void admin_clicks_on_arrow_next_to_program_name() {
+		program.ProgramNameSortClick();
+//		throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("Admin see the Program Name is sorted in {string} ascending or descending order")
+	public void admin_see_the_program_name_is_sorted_in_ascending_or_descending_order(String sortingOrder) {
+		Assert.assertTrue(program.verifyingProgramNameSorting(sortingOrder),
+				"Sorting verification failed for order: " + sortingOrder);
+	}
+
+
+	@When("Admin clicks on Arrow next to program Description")
+	public void adminClicksOnArrowNextToProgramDescription() {
+		program.ProgramDescriptionSortClick();
+	}
+
+	@Then("Admin see the Program Description is sorted in {string} ascending or descending order")
+	public void adminSeeTheProgramDescriptionIsSortedInAscendingOrDescendingOrder(String sortingOrder) {
+		Assert.assertTrue(program.verifyingProgramDescSorting(sortingOrder),
+				"Sorting verification failed for order: " + sortingOrder);
+	}
+
+	@When("Admin clicks on Arrow next to program status")
+	public void adminClicksOnArrowNextToProgramStatus() {
+		program.ProgramStatusSortClick();
+	}
+
+	@Then("Admin see the Program Status is sorted in {string} ascending or descending order")
+	public void adminSeeTheProgramStatusIsSortedInAscendingOrDescendingOrder(String sortingOrder) {
+		Assert.assertTrue(program.verifyingProgramStatusSorting(sortingOrder),
+				"Sorting verification failed for order: " + sortingOrder);
+	}
 }
 

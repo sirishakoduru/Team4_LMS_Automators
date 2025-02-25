@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,7 +50,27 @@ public class Program {
 	
 	//Add Program
 	@FindBy(xpath="//input[@id = 'programName']") WebElement programName ;
-	@FindBy(xpath="//span[text()='Program Details']")  WebElement programDetails ;
+	@FindBy(xpath="//label[text()='Name' and  '*']") WebElement programNameAs;
+	@FindBy(xpath="//span[@id = 'pr_id_8-label']")  WebElement programDetails ;
+	@FindBy(xpath="//label[text()='Name']")  WebElement programDesc ;
+	@FindBy(xpath="//label[text()='Name']")  WebElement programStatus ;
+	@FindBy(xpath="//span[text()='Save']")  WebElement saveBtn ;
+	@FindBy(xpath="//span[text()='Cancel']")  WebElement cancelBtn ;
+	@FindBy(xpath="//small[text()='Program name is required.']")  WebElement progNameError;
+	@FindBy(xpath="//input[@id='programName']")  WebElement progNameTextBox;
+	@FindBy(xpath="//input[@id='programDescription']")  WebElement progDescTextBox;
+	@FindBy(xpath="(//p-radiobutton[@name='category'])[1]")  WebElement activeStatusBtn;
+	@FindBy(xpath="(//p-radiobutton[@name='category'])[2]")  WebElement inactiveStatusBtn;
+
+
+	private By progDescError = By.xpath("//small[text()='Description is required.']");
+	private By progStatuserror = By.xpath("//small[text()='Status is required.']");
+	private By validProgNameCheck = By.xpath("(//tbody[@class='p-datatable-tbody']/tr/td)[2]");
+	private By validProgDescCheck = By.xpath("(//tbody[@class='p-datatable-tbody']/tr/td)[3]");
+	private By validProgStatusCheck = By.xpath("(//tbody[@class='p-datatable-tbody']/tr/td)[4]");
+	private By closeBtnPopUp = By.xpath("//span[@class='p-dialog-header-close-icon ng-tns-c168-6 pi pi-times']");
+	private By alertmsg = By.xpath("//div[contains(@class, 'p-toast-detail')]");
+	private By delCloseBtnPopup=By.xpath("(//button[@ng-reflect-ng-class='[object Object]'])[10]");
 	
 	
 	
@@ -107,12 +128,18 @@ public class Program {
 	
 	public Boolean programPageVerify() {
 		
-		if(subMenu.isDisplayed())
-		{
-			subMenu.click();
-			subMenuClose.click();
+		try	{
+			if(subMenu.isDisplayed())
+			{
+				subMenu.click();
+				subMenuClose.click();
+			}
+				return pgmMgmtText.isDisplayed();
 		}
-		return pgmMgmtText.isDisplayed();
+		catch(Exception e){
+			programLink.click();
+			return pgmMgmtText.isDisplayed();
+		}
 		
 	}
 	
@@ -281,37 +308,277 @@ public class Program {
 
 	}
 	
-	//Add Program
+	///////                       Add Program                          ////////////////////////
 	
-	public Boolean subMenuClick() {
-		try {
-			Boolean b=subMenu.isDisplayed();
-			subMenu.click();
-			System.out.println("The try click");
-			return b;
-	    
-		} catch (Exception e) {
-		    programLink.click();
-		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subMenu);
-			Boolean b=subMenu.isDisplayed();
-			subMenu.click();
-			System.out.println("The catch click");
-			System.out.println("The boolean: "+b);
-			return b;
+	public void programLinkAddClick() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		try
+		{
+			if(subMenu.isEnabled()) {
+				System.out.println("The sub menu is enabled.");
+				WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subMenu);
+				subMenu.click();
+				System.out.println("The sub menu is clicked.");
+			}
+			else {
+				if(subMenuClose.isEnabled())
+				{
+					System.out.println("The sub menu closed is enabled.");
+					//subMenuClose.click();
+					programLink.click();
+					subMenu.click();
+				}
+			}
 		}
+		catch(Exception e)
+		{
+			//System.out.println("The sub menu is not enabled: "+e);
+			WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
+			programLink.click();
+			WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subMenu);
+			subMenu.click();
+		}
+
 	}
 	
 	public boolean isProgramDetailsPopup() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			try{
+				boolean b= subMenuClose.isDisplayed();
+				if(b==true) {
+					subMenuClose.click();}
+					return b;
+			}
+			catch(Exception e)
+			{
+				return false;
+			}
+	}
+	
+	public void validateProgramDetailsTitle(String expectedTitle) {
+		
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 30 seconds timeout
+		System.out.println(programDetails.getText());
+		subMenuClose.click();
+	}
+	
+	public boolean validateAsterisk(String field) {
+		
+		String expectedColor = "rgba(255, 0, 0, 1)";
+
+
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			wait.until(ExpectedConditions.visibilityOfElementLocated((By) programName));
-			return programName.isSelected();
+				if (programNameAs.isDisplayed()) {
+					return true;
+					
+			}
 		} catch (Exception e) {
-			return false;
+			return false; // Return false if an exception occurs
 		}
+
+		return false; // Return false if no conditions were met
 	}
-	public void seeAddPgmWindow() {
-		programName.sendKeys("Hiii");
+	
+	public void programLinkAddForm() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		try
+		{
+			
+			if(programLink.isEnabled())
+			{
+				programLink.click();
+				subMenu.click();
+			}
+			else if(subMenu.isEnabled()) {
+				System.out.println("The sub menu is enabled.");
+				WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(20));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", subMenu);
+				subMenu.click();
+			}
+			
+		}
+		catch(Exception e)
+		{
+		
+			if(subMenuClose.isEnabled())
+			{
+				subMenuClose.click();
+				programLink.click();
+				subMenu.click();
+			}
+			else {
+			//System.out.println("The sub menu is not enabled: "+e);
+			programLink.click();
+			subMenu.click();
+			}
+		}
+
 	}
+	
+	public void clickSaveAdd() {
+		saveBtn.click();
+	}
+	
+	public Boolean mandatoryError() {
+		
+		if(progNameError.isDisplayed())
+			return true;
+		return false;
+	}
+	
+	public void clickCancelAdd() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cancelBtn);
+		System.out.println("inside Cancel button");
+		cancelBtn.click();
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("location.reload()");
+	}
+	
+	public void enterPgName() {
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", progNameTextBox);
+		progNameTextBox.sendKeys("First Pg nm");
+	}
+	
+	public void dispPgName()
+	{
+		System.out.println(progNameTextBox.getText());
+	}
+	
+	public void enterPgDescName() {
+		
+		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", progDescTextBox);
+		progDescTextBox.sendKeys("First Pg Desc");
+	}
+	
+	public void dispPgDescName()
+	{
+		System.out.println(progDescTextBox.getText());
+	}
+	
+	public void selBtn() {
+		
+		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activeStatusBtn);
+		activeStatusBtn.click();
+	}
+	
+	public void dispSelBtn()
+	{
+		System.out.println(activeStatusBtn.isSelected());
+	}
+	
+	/***************************                    SORTING                       ********************************/
+	
+	public void ProgramNameSortClick() {
+		Actions actions = new Actions(DriverFactory.getDriver());
+		WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(10));
+		System.out.println("ProgramNameSortClick");
+		WebElement programNameHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//th[contains(text(),'programName')]")));
+		System.out.println(programNameHeader.getText());
+//		WebElement programNameHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-program/div/mat-card/mat-card-content/p-table/div/div[1]/table/thead/tr/th[2]")));
+		actions.moveToElement(programNameHeader).click().perform();
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table/tbody/tr")));
+	}
+
+	public boolean verifyingProgramNameSorting(String ASCorDES) {
+		List<WebElement> rows = DriverFactory.getDriver().findElements(By.xpath("//table/tbody/tr"));
+		List<String> actualData = new ArrayList<>();
+		for (WebElement row : rows) {
+			actualData.add(row.findElement(By.xpath(".//td[2]")).getText());
+		}
+		List<String> sortedData = new ArrayList<>(actualData);
+
+		switch (ASCorDES.trim().toLowerCase()) {
+			case "ascending":
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER);
+				break;
+			case "descending":
+//				Collections.sort(sortedData, Collections.reverseOrder());
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER.reversed());
+				break;
+			default:
+				System.out.println("Invalid sort option: " + ASCorDES);
+				return false;
+		}
+		System.out.println("ActualData:"+actualData);
+		System.out.println("SortedData:"+sortedData);
+				return actualData.equals(sortedData);
+	}
+
+	public void ProgramDescriptionSortClick() {
+		Actions actions = new Actions(DriverFactory.getDriver());
+		WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(10));
+//		WebElement programDescHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//th[contains(text(),'programDescription')]")));
+		WebElement programDescHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-program/div/mat-card/mat-card-content/p-table/div/div[1]/table/thead/tr/th[3]")));
+		actions.moveToElement(programDescHeader).click().perform();
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table/tbody/tr")));
+	}
+
+	public boolean verifyingProgramDescSorting(String ASCorDES) {
+		List<WebElement> rows = DriverFactory.getDriver().findElements(By.xpath("//table/tbody/tr"));
+		List<String> actualData = new ArrayList<>();
+		for (WebElement row : rows) {
+			actualData.add(row.findElement(By.xpath(".//td[3]")).getText());
+		}
+		List<String> sortedData = new ArrayList<>(actualData);
+
+		switch (ASCorDES.trim().toLowerCase()) {
+			case "ascending":
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER);
+				break;
+			case "descending":
+//				Collections.sort(sortedData, Collections.reverseOrder());
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER.reversed());
+				break;
+			default:
+				System.out.println("Invalid sort option: " + ASCorDES);
+				return false;
+		}
+
+		return actualData.equals(sortedData);
+	}
+
+	public void ProgramStatusSortClick() {
+		Actions actions = new Actions(DriverFactory.getDriver());
+		WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(10));
+//		WebElement programStatusHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//th[contains(text(),'programStatus')]")));
+		WebElement programStatusHeader = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/app-root/app-program/div/mat-card/mat-card-content/p-table/div/div[1]/table/thead/tr/th[4]")));
+		actions.moveToElement(programStatusHeader).click().perform();
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table/tbody/tr")));
+	}
+
+	public boolean verifyingProgramStatusSorting(String ASCorDES) {
+		List<WebElement> rows = DriverFactory.getDriver().findElements(By.xpath("//table/tbody/tr"));
+		List<String> actualData = new ArrayList<>();
+		for (WebElement row : rows) {
+			actualData.add(row.findElement(By.xpath(".//td[4]")).getText());
+		}
+		List<String> sortedData = new ArrayList<>(actualData);
+
+		switch (ASCorDES.trim().toLowerCase()) {
+			case "ascending":
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER);
+				break;
+			case "descending":
+//				Collections.sort(sortedData, Collections.reverseOrder());
+				Collections.sort(sortedData, String.CASE_INSENSITIVE_ORDER.reversed());
+				break;
+			default:
+				System.out.println("Invalid sort option: " + ASCorDES);
+				return false;
+		}
+
+		return actualData.equals(sortedData);
+	}
+
 }

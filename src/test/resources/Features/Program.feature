@@ -105,3 +105,101 @@ Given Admin is on Program page
 When Admin clicks on "Add New Program" under the "Program" menu bar
 Then Admin should see pop up window for program details
 
+#18 Menu bar - Program - Add New Program
+Scenario: Verify title of the pop up windowm 
+Given Admin is on Program page
+When Admin clicks on "Add New Program" under the "Program" menu bar
+Then Admin should see window title as "Program Details"
+
+#19 Menu bar - Program - Add New Program
+Scenario: Verify mandatory fields with red asterisk mark 
+Given Admin is on Program page
+When Admin clicks on "Add New Program" under the "Program" menu bar
+Then Admin should see red  asterisk mark  beside mandatory field "Name"
+
+#20 Menu bar - Program - Add New Program
+Scenario: Verify empty form submission 
+Given Admin is on Program details form
+When Admin clicks save button without entering mandatory 
+Then Admin gets error message 
+
+#21 Menu bar - Program - Add New Program
+Scenario: Verify cancel button 
+Given Admin is on Program details form
+When Admin clicks Cancel button
+Then Admin can see Program Details form disappears  
+
+#22 Menu bar - Program - Add New Program
+Scenario: Verify enter program name 
+Given Admin is on Program details form
+When Admin enters the Name in the text box
+Then Admin can see the text entered 
+
+#23 Menu bar - Program - Add New Program
+Scenario: Verify enter description 
+Given Admin is on Program details form
+When Admin enters the Description in text box
+Then Admin can see the text entered in description box
+
+#24 Menu bar - Program - Add New Program
+Scenario: Verify select Status 
+Given Admin is on Program details form
+When Admin selects the status of the program by clicking on the radio buttonx
+Then Admin can see status selected  
+
+#25 Menu bar - Program - Add New Program
+Scenario: Verify Admin is able to save the program details
+Given Admin is on Program details form
+When Admin enter valid details for mandatory fields and Click on save button
+Then Admin gets message 'Successful Program created'  
+
+#26 Menu bar - Program - Add New Program
+Scenario: Verify cancel program details
+Given Admin is on Program details form
+When Admin Click on cancel button
+Then Admin can see program details form disappear
+
+#27 Menu bar - Program - Add New Program
+Scenario: Verify added Program is created
+Given Admin is on Program page
+When Admin searches with newly created "Program Name"
+Then Records of the newly created  "Program Name" is displayed and match the data entered
+
+#28 Menu bar - Program - Add New Program
+Scenario: Verify close window with "X" 
+Given Admin is on Program details form
+When Admin Click on close button
+Then Admin can see program details form disappear
+
+#54 Manage Program - Sorting Program
+Scenario Outline: Verify sorting of  Program name in Ascending order/Descending order
+Given Admin is on Program page
+When Admin clicks on Arrow next to program Name
+Then Admin see the Program Name is sorted in "<SortingOrder>" ascending or descending order
+
+Examples:
+| SortingOrder |
+| ascending    |
+| descending   |
+
+#55 Manage Program Description - Sorting Program
+Scenario Outline: Verify sorting of  Program Description in Ascending order/Descending order
+    Given Admin is on Program page
+    When Admin clicks on Arrow next to program Description
+    Then Admin see the Program Description is sorted in "<SortingOrder>" ascending or descending order
+
+    Examples:
+      | SortingOrder |
+      | ascending    |
+      | descending   |
+
+#56 Manage Program status - Sorting Program
+Scenario Outline: Verify sorting of  Program status in Ascending order/Descending order
+    Given Admin is on Program page
+    When Admin clicks on Arrow next to program status
+    Then Admin see the Program Status is sorted in "<SortingOrder>" ascending or descending order
+
+    Examples:
+      | SortingOrder |
+      | ascending    |
+      | descending   |
