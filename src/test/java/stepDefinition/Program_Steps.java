@@ -151,7 +151,7 @@ public class Program_Steps {
 	
 	@Given("Admin is on Program page")
 	public void admin_is_on_program_page() {
-		//Assert.assertEquals(program.programPageVerify(),true,"Verifying if we are on PROGRAM page" );
+		Assert.assertEquals(program.programPageVerify(),true,"Verifying if we are on PROGRAM page" );
 	}
 
 	@When("Admin clicks on {string} under the {string} menu bar")
