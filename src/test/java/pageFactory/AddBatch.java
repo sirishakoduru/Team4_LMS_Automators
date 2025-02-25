@@ -48,7 +48,7 @@ public class AddBatch {
 	@FindBy(xpath="//div//div[2]//div[3]//small[contains(text(),'Batch Description is required.')]") 
 	WebElement Description_Error;
 	@FindBy(xpath="//div//div//div//div[2][@class='p-toast-detail ng-tns-c20-39' and contains (text(),' Batch Created Successfully')]") WebElement SuccessfulMessage;
-	
+	@FindBy(xpath="//div//small[@class='p-invalid ng-star-inserted' and contains (text(),'This field accept only numbers and max 5 count. ')]") WebElement Invalid_Batch_Error;
 	
 	public void Select_dropdown() {
 		PrognameDropDown.click();
@@ -166,5 +166,8 @@ public class AddBatch {
 		String act_Message=SuccessfulMessage.getText();
 		String Exp_Message=" Batch Created Successfully";
 		Assert.assertEquals(act_Message, Exp_Message);
+	}
+	public void Invalid_BatchNumber_Error() {
+		Invalid_Batch_Error.isDisplayed();
 	}
 }

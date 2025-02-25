@@ -89,7 +89,7 @@ public void admin_should_see_total_no_of_classes_in_below_of_the_data_table() {
 public void admin_clicks_on_any_page_link_on_manage_class_page() {
 //	JavascriptExecutor js = (JavascriptExecutor)driver;
 //    js.executeScript("arguments[0].click();",HomeButton);
-   cls.outsidebox(); 
+//   cls.outsidebox(); 
    cls.home();
 }
 

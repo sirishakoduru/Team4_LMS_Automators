@@ -133,6 +133,3 @@ Scenario: Validate logout option in the header is visible and enabled from the b
 Given Admin is on the Batch Details Page
 When Admin clicks on the logout button
 Then Admin should see the Login screen Page
-
-
-
