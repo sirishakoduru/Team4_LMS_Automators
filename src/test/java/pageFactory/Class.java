@@ -2,6 +2,8 @@ package pageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -25,10 +27,13 @@ public class Class {
 	@FindBy(xpath="//*[text()='Class']")WebElement Classbtn;
 	@FindBy(xpath="/html/body/app-root/app-header/mat-toolbar/span[1]")WebElement LMSTitle;
 	@FindBy(xpath="/html/body/app-root/app-session/div/mat-card/mat-card-title/div[1]")WebElement classheader;
+	@FindBy(xpath="/html/body/app-root/app-dashboard/div/div[1]/mat-card/mat-card-title/div")WebElement dashboardhr;
 	@FindBy(xpath="/html/body/app-root/app-session/div/mat-card/mat-card-title/div[2]/div[2]/span/input")WebElement searchbar;
 	@FindBy(xpath = "//input[@id='filterGlobal']") public WebElement search;
 	//@FindBy(xpath="//tr/th")List<WebElement>private By  classcolheader;
+	@FindBy(xpath="//tr/th") List<WebElement> colHeaders;
 	@FindBy(className="ng-star-inserted")WebElement pagination;
+	@FindBy(xpath="//span[@class='p-paginator-current ng-star-inserted']") WebElement paginator ;
 	@FindBy(xpath = "//span[contains(@class, 'p-paginator-current')]")WebElement currentEntriesText;
 	@FindBy(xpath="/html/body/app-root/app-session/div/mat-card/mat-card-content/p-table/div/p-paginator/div/button[1]")WebElement startbtn;
     @FindBy(xpath = "//button[contains(@class, 'p-paginator-first')]")WebElement firstBtn;
@@ -62,30 +67,64 @@ public class Class {
 		String actual = classheader.getText();
 		Assert.assertEquals(actual,"Manage Class");
 }
-	public void searchbar() {
+public void dashboardhr() {
 		
-		String actual = searchbar.getText().trim();
-		System.out.println("text:"+actual);
-		Assert.assertEquals(actual,"Search...");
+		String actual = dashboardhr.getText();
+		Assert.assertEquals(actual," Dashboard");
 }
-public void classcolheader() {
-//  List<WebElement> tableHeaders = driver.findElements(classcolheader);
-//	List<String> actualColheaders = new ArrayList<>();
-//	String tableHeaders = classcolheader.getText();
-//
-//	for (int i = 1; i < tableHeaders.size(); i++) {
-//		actualColheaders.add(tableHeaders.get(i).getText());
-//		
+	public String searchbar() {
+		
+if (search.isDisplayed()) {
+			
+			String actualSearchPlaceholder = search.getAttribute("placeholder");
+			return actualSearchPlaceholder;
+		
+		}
+		else {return "";}
 	}
-//	
-//	String actual = classcolheader.getText();
-//		
+public List<String> classcolheader() {
+	List<String> actualColOrder = new ArrayList<>();
+	for (WebElement link : colHeaders) {
+	    actualColOrder.add(link.getText().trim()); // Trim to remove spaces
+	}
+	System.out.println("Actual Link Order: " + actualColOrder);
+	return actualColOrder;
 
-public void pagination() {
-	
-	String actual = pagination.getText();
-	Assert.assertEquals(actual,true);
 }
+	public Boolean validatePaginationTextandIcons(String text) throws InterruptedException  {
+		Thread.sleep(1000);
+		WebElement paginatorElement = paginator;
+		boolean areIconsPresent = prevBtn.isDisplayed()
+				&& startbtn.isDisplayed()
+				&& nextBtn.isDisplayed()
+				&& lastBtn.isDisplayed();
+		try {
+			if (areIconsPresent) {
+				String textValidation = paginatorElement.getText();
+				Pattern pattern = Pattern.compile("\\d+");
+				Matcher matcher = pattern.matcher(textValidation);
+				List<Integer> numericValues = new ArrayList<Integer>();
+				while (matcher.find()) {
+					int numericValue = Integer.parseInt(matcher.group());
+					numericValues.add(numericValue);
+				}
+				text = String.format("Showing %d to %d of %d entries", numericValues.get(0), numericValues.get(1),
+						numericValues.get(2));
+				
+				String actualText = text.replaceAll("\\d", "").trim();
+				String expectedText ="Showing 5 to 10 of 20 entries";
+				expectedText = expectedText.replaceAll("\\d", "").trim();
+				Boolean result = actualText.equalsIgnoreCase(expectedText);
+				return result;
+			}
+		} catch (Exception e) {
+			System.out.println("Pagination Icons are not displayed" + e);
+			Boolean result = false;
+		}
+		return false;
+	}
+
+
 
 public boolean sortingicons() {
 	try {
